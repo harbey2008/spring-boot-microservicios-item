@@ -21,7 +21,8 @@ public class ItemServicioImpl implements IItemProductoService{
 	
 	@Override
 	public List<Item> obtenerItemProductos() {
-		List<Producto> misProductos = Arrays.asList(clienteRest.getForObject("http://localhost:8080/micro-servicio-producto/productos", Producto[].class));
+		//List<Producto> misProductos = Arrays.asList(clienteRest.getForObject("http://localhost:8081/micro-servicio-producto/productos", Producto[].class));
+		List<Producto> misProductos = Arrays.asList(clienteRest.getForObject("http://localhost:8081/micro-servicio-producto/micro-servicio-producto/productos", Producto[].class));
 		
 		return misProductos.stream().map(p -> new Item(p, 1)).collect(
 				Collectors.toList());
@@ -32,7 +33,8 @@ public class ItemServicioImpl implements IItemProductoService{
 		Map<String, String> pathVariables = new HashMap<String, String>();
 		pathVariables.put("id", id.toString());
 		
-		Producto miProducto = clienteRest.getForObject("http://localhost:8080/micro-servicio-producto/productos/{id}", Producto.class, pathVariables);
+		Producto miProducto = clienteRest.getForObject("http://localhost:8081/micro-servicio-producto/productos/{id}", Producto.class, pathVariables);
+		//Producto miProducto = clienteRest.getForObject("http://micro-servicio-producto/productos/{id}", Producto.class, pathVariables);
 		
 		return new Item(miProducto, cantidad);
 	}
